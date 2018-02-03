@@ -34,15 +34,17 @@ namespace CandyMarket
                         // if(moreDifficultDataModel) bug - this is passing candy type right now (which just increments in our DatabaseContext), but should also be passing candy details
                         db.SaveNewCandy(selectedCandyType.KeyChar);
                         break;
-                    case '2':
+                    case '2':// eat candy
                         EatCandy(db);
-                        /** 
-						 * select a candy type
-						 * 
-						 * select specific candy details to eat from list filtered to selected candy type
-						 * 
-						 * enjoy candy
-						 */
+
+
+                        //* select specific candy details to eat from list filtered to selected candy type
+                        //* 
+                        //* enjoy candy
+                        //*/
+                        Console.ReadKey();
+                        db.RemoveCandy(selectedCandyType.KeyChar);
+                       
                         break;
                     case '3': //Show candy
                         ShowCandy(db);
@@ -54,6 +56,7 @@ namespace CandyMarket
 						 * 
 						 * cry for lost candy
 						 */
+                        Console.ReadKey();
                         break;
                     case '4':
                         /** give candy
@@ -130,12 +133,27 @@ namespace CandyMarket
                 }
             }
             Console.Write(haveCandyMenu.GetFullMenu());
-            Console.ReadKey();
+           
         }
 
-        static void EatCandy(DatabaseContext db)
+        static ConsoleKeyInfo EatCandy(DatabaseContext db)
         {
-            
+            ShowCandy(db);
+            Console.ReadKey();
+            var candyTypes = db.GetCandyTypes();
+
+            var newCandyMenu = new View()
+                    .AddMenuText("What type of candy do you want to eat?")
+                    .AddMenuOptions(candyTypes);
+
+            Console.Write(newCandyMenu.GetFullMenu());
+
+            ConsoleKeyInfo selectedCandyType = Console.ReadKey();
+            return selectedCandyType;
         }
+
+
+
+
 	}
 }
