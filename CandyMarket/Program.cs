@@ -35,16 +35,17 @@ namespace CandyMarket
 						db.SaveNewCandy(selectedCandyType.KeyChar);
 						break;
 					case '2':
-						/** eat candy
+                        /** eat candy
 						 * select a candy type
 						 * 
 						 * select specific candy details to eat from list filtered to selected candy type
 						 * 
 						 * enjoy candy
 						 */
-						break;
-					case '3':
-						/** throw away candy
+                        break;
+					case '3': //Show candy
+                        ShowCandy(db);
+                        /** throw away candy
 						 * select a candy type
 						 * if(moreDifficultDataModel) enhancement - give user the option to throw away old candy in one action. this would require capturing the detail of when the candy was new.
 						 * 
@@ -52,7 +53,7 @@ namespace CandyMarket
 						 * 
 						 * cry for lost candy
 						 */
-						break;
+                        break;
 					case '4':
 						/** give candy
 						 * feel free to hardcode your users. no need to create a whole UI to register users.
@@ -94,6 +95,7 @@ namespace CandyMarket
 			View mainMenu = new View()
 					.AddMenuOption("Did you just get some new candy? Add it here.")
 					.AddMenuOption("Do you want to eat some candy? Take it here.")
+                    .AddMenuOption("Show me the candy options I have.")
 					.AddMenuText("Press 0 to exit.");
 
 			Console.Write(mainMenu.GetFullMenu());
@@ -114,5 +116,19 @@ namespace CandyMarket
 			ConsoleKeyInfo selectedCandyType = Console.ReadKey();
 			return selectedCandyType;
 		}
+
+        static void ShowCandy(DatabaseContext db)
+        {
+            var FinalContents = db.GetUserCandy();
+            var haveCandyMenu = new View();
+            foreach (var keyValuPair in FinalContents)
+            {
+
+             
+                haveCandyMenu.AddMenuText($"{keyValuPair.Key} has {keyValuPair.Value} pieces of candy");
+            }
+            Console.Write(haveCandyMenu.GetFullMenu());
+            Console.ReadKey();
+        }
 	}
 }
