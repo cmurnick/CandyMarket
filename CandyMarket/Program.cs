@@ -26,39 +26,25 @@ namespace CandyMarket
                         // select a candy type
                         var selectedCandyType = AddNewCandyType(db);
 
-                        /** MORE DIFFICULT DATA MODEL
-						 * show a new menu to enter candy details
-						 * it would be convenient to show the menu in stages e.g. press enter to go to next detail stage, but write the whole screen again with responses populated so far.
-						 */
-
-                        // if(moreDifficultDataModel) bug - this is passing candy type right now (which just increments in our DatabaseContext), but should also be passing candy details
+                      
                         db.SaveNewCandy(selectedCandyType.KeyChar);
                         break;
                     case '2':// eat candy
                         EatCandy(db);
-
-
-                        //* select specific candy details to eat from list filtered to selected candy type
-                        //* 
-                        //* enjoy candy
-                        //*/
                         Console.ReadKey();
                         db.RemoveCandy(selectedCandyType.KeyChar);
                        
                         break;
                     case '3': //Show candy
                         ShowCandy(db);
-                        /** throw away candy
-						 * select a candy type
-						 * if(moreDifficultDataModel) enhancement - give user the option to throw away old candy in one action. this would require capturing the detail of when the candy was new.
-						 * 
-						 * select specific candy details to throw away from list filtered to selected candy type
-						 * 
-						 * cry for lost candy
-						 */
                         Console.ReadKey();
                         break;
                     case '4':
+                        ShareCandy(db);
+                        //Console.ReadKey();
+                        db.CandyToTable(selectedCandyType.KeyChar);
+                        AssignCandy(db);
+
                         /** give candy
 						 * feel free to hardcode your users. no need to create a whole UI to register users.
 						 * no one is impressed by user registration unless it's just amazingly fast & simple
@@ -68,6 +54,7 @@ namespace CandyMarket
 						 * you'll need a way to select what user you're giving candy to.
 						 * one design suggestion would be to put candy "on the table" and then "give the candy on the table" to another user once you've selected all the candy to give away
 						 */
+                      
                         break;
                     case '5':
                         /** trade candy
@@ -100,6 +87,7 @@ namespace CandyMarket
                     .AddMenuOption("Did you just get some new candy? Add it here.")
                     .AddMenuOption("Do you want to eat some candy? Take it here.")
                     .AddMenuOption("Show me the candy options I have.")
+                    .AddMenuOption("Who do you want to share your candy with?")
                     .AddMenuText("Press 0 to exit.");
 
             Console.Write(mainMenu.GetFullMenu());
@@ -153,22 +141,34 @@ namespace CandyMarket
             return selectedCandyType;
         }
 
-
-        static ConsoleKeyInfo EatCandy2(DatabaseContext db)
+        static ConsoleKeyInfo ShareCandy(DatabaseContext db)
         {
             ShowCandy(db);
             Console.ReadKey();
             var candyTypes = db.GetCandyTypes();
 
+            var newCandyMenu = new View()
+                    .AddMenuText("What type of candy do you want to share?")
 
+                    .AddMenuOptions(candyTypes);
 
-
-
-
-
+            Console.Write(newCandyMenu.GetFullMenu());
+            
             ConsoleKeyInfo selectedCandyType = Console.ReadKey();
             return selectedCandyType;
         }
 
-	}
+        static ConsoleKeyInfo AssignCandy(DatabaseContext db)
+        {
+            var whichUser = db.GetUsers();
+            var newUser = new View()
+               .AddMenuText("Who do you want to share with?")
+
+               .AddMenuOptions(whichUser);
+
+            Console.Write(newUser.GetFullMenu());
+            ConsoleKeyInfo selectedUser = Console.ReadKey();
+            return selectedUser;
+        }
+    }
 }
