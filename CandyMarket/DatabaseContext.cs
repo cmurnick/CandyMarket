@@ -29,6 +29,8 @@ namespace CandyMarket
 				.ToList();
 		}
 
+        
+
         internal Dictionary<string, int> GetUserCandy()
         {
             var contents = new Dictionary<string, int>();

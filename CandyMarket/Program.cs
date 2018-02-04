@@ -144,6 +144,7 @@ namespace CandyMarket
 
             var newCandyMenu = new View()
                     .AddMenuText("What type of candy do you want to eat?")
+
                     .AddMenuOptions(candyTypes);
 
             Console.Write(newCandyMenu.GetFullMenu());
@@ -153,7 +154,21 @@ namespace CandyMarket
         }
 
 
+        static ConsoleKeyInfo EatCandy2(DatabaseContext db)
+        {
+            ShowCandy(db);
+            Console.ReadKey();
+            var candyTypes = db.GetCandyTypes();
 
+
+
+
+
+
+
+            ConsoleKeyInfo selectedCandyType = Console.ReadKey();
+            return selectedCandyType;
+        }
 
 	}
 }
