@@ -43,7 +43,9 @@ namespace CandyMarket
                         ShareCandy(db);
                         db.CandyToTable(selectedCandyType.KeyChar);
                         AssignCandy(db);
-
+                        //var selectedUserType = AddNewUserType(db);
+                        db.SelectUser(selectedCandyType.KeyChar);
+                        Console.ReadKey();
                         /** give candy
 						 * feel free to hardcode your users. no need to create a whole UI to register users.
 						 * no one is impressed by user registration unless it's just amazingly fast & simple
@@ -108,6 +110,19 @@ namespace CandyMarket
             return selectedCandyType;
         }
 
+        static ConsoleKeyInfo AddNewUserType(DatabaseContext db)
+        {
+            var userTypes = db.GetUsers();
+
+            var newUserMenu = new View()
+                    .AddMenuText("poop?")
+                    .AddMenuOptions(userTypes);
+
+            Console.Write(newUserMenu.GetFullMenu());
+
+            ConsoleKeyInfo selectedUserType = Console.ReadKey();
+            return selectedUserType;
+        }
         static void ShowCandy(DatabaseContext db)
         {
             var FinalContents = db.GetUserCandy();
