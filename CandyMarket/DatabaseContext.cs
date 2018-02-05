@@ -53,6 +53,10 @@ namespace CandyMarket
             return contents;
         }
 
+        //internal Dictionary<Users, > 
+        //  {
+        //}
+
         internal void SaveNewCandy(char selectedCandyMenuOption)
         {
             var candyOption = int.Parse(selectedCandyMenuOption.ToString());
@@ -120,6 +124,7 @@ namespace CandyMarket
                 case CandyType.TaffyNotLaffy:
                     --_countOfTaffy;
                     ++_taffySavedToTable;
+
                     break;
                 case CandyType.CandyCoated:
                     --_countOfCandyCoated;
@@ -139,15 +144,43 @@ namespace CandyMarket
 
         }
 
-        internal List<string> Users()
+        internal void SelectUser(char selectedUserMenuOption)
         {
-            var contents = new List<string>();
-            contents.Add("Jason");
-            contents.Add("Kelly");
-            contents.Add("Adam");
-            contents.Add("Patrick");
+            var userOption = int.Parse(selectedUserMenuOption.ToString());
 
-            return contents;
+            var maybeUserMaybeNot = (Users)selectedUserMenuOption;
+            var forRealTheUserThisTime = (Users)userOption;
+
+            switch (forRealTheUserThisTime)
+            {
+                case CandyMarket.Users.Jason:
+                    ++ _taffySavedToTable;
+                    ++ _candyCoatedSavedToTable;
+                    ++ _chocolateBarSavedToTable;
+                    ++ _zagnutSavedToTable;
+                    break;
+                case CandyMarket.Users.Patrick:
+                    --_countOfCandyCoated;
+                    break;
+                case CandyMarket.Users.Joe:
+                    --_countOfChocolateBar;
+                    break;
+                case CandyMarket.Users.James:
+                    --_countOfZagnut;
+                    break;
+                default:
+                    break;
+            }
+
+        //    internal List<string> Users()
+        //{
+        //    var contents = new List<string>();
+        //    contents.Add("Jason");
+        //    contents.Add("Kelly");
+        //    contents.Add("Adam");
+        //    contents.Add("Patrick");
+
+        //    return contents;
         }
 
         //    internal Dictionary<list<users>, int> SharedCandy()

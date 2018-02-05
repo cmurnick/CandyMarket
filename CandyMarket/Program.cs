@@ -41,7 +41,6 @@ namespace CandyMarket
                         break;
                     case '4':
                         ShareCandy(db);
-                        //Console.ReadKey();
                         db.CandyToTable(selectedCandyType.KeyChar);
                         AssignCandy(db);
 
