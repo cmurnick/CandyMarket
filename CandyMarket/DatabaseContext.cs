@@ -21,6 +21,7 @@ namespace CandyMarket
 		 * feel free to modify the definition of this collection "BagOfCandy" if you choose to implement the more difficult data model.
 		 * Dictionary<CandyType, List<Candy>> BagOfCandy { get; set; }
 		 */
+         
 
         public DatabaseContext(int tone) => Console.Beep(tone, 2500);
 
@@ -53,11 +54,27 @@ namespace CandyMarket
             return contents;
         }
 
-        //internal Dictionary<Users, > 
-        //  {
+        //Dictionary<string, int> jason = new Dictionary<string, int>();
+        
+        //    jason.Add("taffy", 9);
+        //    jason.Add
+
         //}
 
-        internal void SaveNewCandy(char selectedCandyMenuOption)
+        internal Dictionary<string, int> GetSharingCandy()
+        {
+            var contents = new Dictionary<string, int>();
+            contents.Add("Taffy", _taffySavedToTable);
+            contents.Add("CandyCoated", _candyCoatedSavedToTable);
+            contents.Add("Chocolate Bar", _chocolateBarSavedToTable);
+            contents.Add("Zaganut", _zagnutSavedToTable);
+
+            return contents;
+        }
+
+       
+
+    internal void SaveNewCandy(char selectedCandyMenuOption)
         {
             var candyOption = int.Parse(selectedCandyMenuOption.ToString());
 
@@ -146,21 +163,18 @@ namespace CandyMarket
 
         internal void SelectUser(char selectedUserMenuOption)
         {
-            var userOption = int.Parse(selectedUserMenuOption.ToString());
+            //var userOption = int.Parse(selectedUserMenuOption.ToString());
 
             var maybeUserMaybeNot = (Users)selectedUserMenuOption;
-            var forRealTheUserThisTime = (Users)userOption;
+            //var forRealTheUserThisTime = (Users)userOption;
 
-            switch (forRealTheUserThisTime)
+            switch (maybeUserMaybeNot)
             {
-                case CandyMarket.Users.Jason:
-                    ++ _taffySavedToTable;
-                    ++ _candyCoatedSavedToTable;
-                    ++ _chocolateBarSavedToTable;
-                    ++ _zagnutSavedToTable;
+                case Users.Jason:
+                    GetSharingCandy();
                     break;
                 case CandyMarket.Users.Patrick:
-                    --_countOfCandyCoated;
+                    GetSharingCandy();
                     break;
                 case CandyMarket.Users.Joe:
                     --_countOfChocolateBar;
@@ -172,20 +186,8 @@ namespace CandyMarket
                     break;
             }
 
-        //    internal List<string> Users()
-        //{
-        //    var contents = new List<string>();
-        //    contents.Add("Jason");
-        //    contents.Add("Kelly");
-        //    contents.Add("Adam");
-        //    contents.Add("Patrick");
-
-        //    return contents;
+       
         }
 
-        //    internal Dictionary<list<users>, int> SharedCandy()
-        //    {
-
-        //    }
     }
 }

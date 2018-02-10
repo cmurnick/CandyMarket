@@ -25,7 +25,7 @@ namespace CandyMarket
 
                         // select a candy type
                         var selectedCandyType = AddNewCandyType(db);
-
+                        
                       
                         db.SaveNewCandy(selectedCandyType.KeyChar);
                         break;
@@ -42,21 +42,17 @@ namespace CandyMarket
                     case '4':
                         ShareCandy(db);
                         db.CandyToTable(selectedCandyType.KeyChar);
-                        AssignCandy(db);
-                        //var selectedUserType = AddNewUserType(db);
-                        db.SelectUser(selectedCandyType.KeyChar);
+                        //AssignCandy(db);
+                        var selectedUserType = AssignCandy(db);
+                        db.SelectUser(selectedUserType.KeyChar);
+                        SharersCandy(db);
+
                         Console.ReadKey();
-                        /** give candy
-						 * feel free to hardcode your users. no need to create a whole UI to register users.
-						 * no one is impressed by user registration unless it's just amazingly fast & simple
-						 * 
-						 * select candy in any manner you prefer.
-						 * it may be easiest to reuse some code for throwing away candy since that's basically what you're doing. except instead of throwing it away, you're giving it away to another user.
-						 * you'll need a way to select what user you're giving candy to.
-						 * one design suggestion would be to put candy "on the table" and then "give the candy on the table" to another user once you've selected all the candy to give away
-						 */
-                      
-                        break;
+
+
+
+
+                     break;
                     case '5':
                         /** trade candy
 						 * this is the next logical step. who wants to just give away candy forever?
@@ -123,6 +119,7 @@ namespace CandyMarket
             ConsoleKeyInfo selectedUserType = Console.ReadKey();
             return selectedUserType;
         }
+
         static void ShowCandy(DatabaseContext db)
         {
             var FinalContents = db.GetUserCandy();
@@ -183,6 +180,21 @@ namespace CandyMarket
             Console.Write(newUser.GetFullMenu());
             ConsoleKeyInfo selectedUser = Console.ReadKey();
             return selectedUser;
+        }
+
+        static void SharersCandy(DatabaseContext db)
+        {
+            var FinalContents = db.GetSharingCandy();
+            var haveCandyMenu = new View();
+            foreach (var keyValuPair in FinalContents)
+            {
+                if (keyValuPair.Value >= 1)
+                {
+                    haveCandyMenu.AddMenuText($"The person you shared with has {keyValuPair.Value} pieces of candy { keyValuPair.Key}");
+                }
+            }
+            Console.Write(haveCandyMenu.GetFullMenu());
+
         }
     }
 }
